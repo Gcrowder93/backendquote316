@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const Profile = require('../lib/models/Profile');
 
 describe('quotable routes', () => {
   beforeEach(() => {
@@ -22,5 +23,15 @@ describe('quotable routes', () => {
       name: 'Test User',
       quote: expect.any(String),
     });
+  });
+
+  it('should be able to list profile by id', async () => {
+    const profile = await Profile.insert({
+      name: 'Test User',
+      quote: expect.any(String),
+    });
+    const res = await request(app).get(`/api/v1/profiles/${profile.id}`);
+
+    expect(res.body).toEqual(profile);
   });
 });
