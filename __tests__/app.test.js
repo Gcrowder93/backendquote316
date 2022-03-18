@@ -24,14 +24,4 @@ describe('quotable routes', () => {
       quote: expect.any(String),
     });
   });
-
-  it('should be able to list profile by id', async () => {
-    const profile = await Profile.insert({
-      name: 'Test User',
-      quote: expect.any(String),
-    });
-    const res = await request(app).get(`/api/v1/profiles/${profile.id}`);
-
-    expect(res.body).toEqual(profile);
-  });
 });
